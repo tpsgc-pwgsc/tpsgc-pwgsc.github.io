@@ -3,40 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mouse Trailing Effect</title>
+    <title>Extended Trail Effect</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             overflow: hidden;
-            cursor: none; /* Hide the default cursor */
+            cursor: none;
         }
-        
-        #trail {
+
+        .trail {
             position: absolute;
             width: 6px;
             height: 6px;
-            background-color: #ff00ff; /* Purple color, change as needed */
             border-radius: 50%;
+            transition: opacity 0.5s, transform 0.5s;
         }
     </style>
 </head>
 <body>
-    <div id="trail"></div>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var trail = document.getElementById("trail");
+            document.body.style.cursor = "url('path/to/your-cursor-image.png'), auto";
 
             document.addEventListener("mousemove", function(event) {
-                // Set the trail's position to the mouse coordinates
-                trail.style.left = (event.pageX - 3) + "px";
-                trail.style.top = (event.pageY - 3) + "px";
-            });
+                // Create a new trail element
+                var newTrail = document.createElement("div");
+                newTrail.className = "trail";
+                newTrail.style.left = (event.pageX - 3) + "px";
+                newTrail.style.top = (event.pageY - 3) + "px";
 
-            // Change the cursor to a custom image
-            document.body.style.cursor = "url('path/to/your-cursor-image.png'), auto";
+                // Change the color based on X and Y coordinates
+                var colorX = Math.round((event.pageX / window.innerWidth) * 255);
+                var colorY = Math.round((event.pageY / window.innerHeight) * 255);
+                var color = "rgb(" + colorX + ", " + colorY + ", 100)";
+
+                newTrail.style.backgroundColor = color;
+
+                // Append the new trail element to the body
+                document.body.appendChild(newTrail);
+
+                // Trigger a reflow to restart the transition
+                // See: https://css-tricks.com/restart-css-animation/
+                void newTrail.offsetWidth;
+
+                // Set opacity to 0 to start the fade-out effect
+                newTrail.style.opacity = "0";
+                newTrail.style.transform = "scale(0)";
+
+                // Remove the trail element after the fade-out effect
+                setTimeout(function() {
+                    document.body.removeChild(newTrail);
+                }, 500);
+            });
         });
     </script>
 </body>
 </html>
+
