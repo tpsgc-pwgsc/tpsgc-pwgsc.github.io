@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Extended Trail Effect</title>
+    <title>Test</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -34,8 +34,8 @@
                 newTrail.style.top = (event.pageY - 3) + "px";
 
                 // Change the color based on X and Y coordinates
-                var colorX = Math.round((event.pageX / window.innerWidth) * 255);
-                var colorY = Math.round((event.pageY / window.innerHeight) * 255);
+                var colorX = Math.round((event.pageX / window.innerWidth) * 260);
+                var colorY = Math.round((event.pageY / window.innerHeight) * 260);
                 var color = "rgb(" + colorX + ", " + colorY + ", 100)";
 
                 newTrail.style.backgroundColor = color;
