@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom MSForm Link Generator dfg </title>
+</head>
+<body>
+    <h2>Custom MSForm Link Generator sdf sdf ssdf  </h2>
+    <form id="linkForm">
+        <label for="courseName">Course Name:</label>
+        <input type="text" id="courseName" name="courseName" required>
+        <br><br>
+        <label for="courseCode">Course Code:</label>
+        <input type="text" id="courseCode" name="courseCode" required>
+        <br><br>
+        <label for="trainingFormat">Training Format:</label>
+        <select id="trainingFormat" name="trainingFormat" required>
+            <option value="Facilitated%20(Virtual%20or%20in%20Person%2C%20including%20Blended)">Facilitated (Virtual or in Person, including Blended)</option>
+            <option value="Online%20Self-Directed">Online Self-Directed</option>
+            <option value="Subscription%2C%20License%C2%A0%20(Video%2C%20Audio%2C%20Book)">Subscription, License (Video, Audio, Book)</option>
+            <option value="Conference">Conference</option>
+        </select>
+        <br><br>
+        <label for="facilitatorName">Facilitator Name (Only fill if training format is Facilitated):</label>
+        <input type="text" id="facilitatorName" name="facilitatorName" required>
+        <br><br>
+        <label>Survey Language:</label>
+        <input type="radio" id="french" name="language" value="fr-CA" required>
+        <label for="french">French</label>
+        <input type="radio" id="english" name="language" value="en-US" required>
+        <label for="english">English</label>
+        <br><br>
+        <button type="button" onclick="generateLink()">Generate Link</button>
+    </form>
+    <br>
+    <p>Generated Link:</p>
+    <p id="generatedLink"></p>
+    <button type="button" onclick="copyLink()">Copy Link</button>
+
+    <script>
+        function generateLink() {
+            var courseName = document.getElementById("courseName").value;
+            var courseCode = document.getElementById("courseCode").value;
+            var trainingFormat = document.getElementById("trainingFormat").value;
+            var facilitatorName = document.getElementById("facilitatorName").value;
+            var language = document.querySelector('input[name="language"]:checked').value;
+            var baseUrl = "https://forms.office.com/Pages/ResponsePage.aspx?id=lMFb0L-U1kquLh2w8uOPXg3gnMvnKnZMjFFPRUsUGNFUQVc3UUFFRlVHOUkxMkQ5VlNYSUE1Qzc1QiQlQCN0PWcu&r48d479b8ee394555bca104ce66e78d04=COURSCOURSCOURS&r4e72786e3dfa456f96b2375a517e0de8=CODEDECOURSCODEDECOURS&r371406fd0bcb46bd84dec8a72067cc21=Facilitated%20(Virtual%20or%20in%20Person%2C%20including%20Blended)&r72c1e15d45044ee1b656a8c18cc7b5a3=FALICITATIONFACILITATION";
+            var updatedUrl = baseUrl.replace("COURSCOURSCOURS", courseName)
+                                    .replace("CODEDECOURSCODEDECOURS", courseCode)
+                                    .replace("Facilitated%20(Virtual%20or%20in%20Person%2C%20including%20Blended)", trainingFormat)
+                                    .replace("FALICITATIONFACILITATION", facilitatorName)
+                                    + "&lang=" + language;
+            document.getElementById("generatedLink").innerText = updatedUrl;
+        }
+
+        function copyLink() {
+            var linkText = document.getElementById("generatedLink").innerText;
+            navigator.clipboard.writeText(linkText).then(function() {
+                alert('Link copied to clipboard!');
+            }, function(err) {
+                alert('Failed to copy link: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
